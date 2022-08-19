@@ -14,6 +14,7 @@ public class Quiz : MonoBehaviour
     [Header("Answers")]
     [SerializeField] GameObject[] answerButtons;
     int correctAnswerIndex;
+    public bool hasAnsweredInTime;
 
     [Header("Button Colors")]
     [SerializeField] Sprite defaultAnswerSprite;
@@ -33,9 +34,24 @@ public class Quiz : MonoBehaviour
     void Update()
     {
         timerImage.fillAmount = timer.fillFraction;
+
+        if (!timer.isAnsweringQuestion && !hasAnsweredInTime)
+        {
+            DisplayAnswer(-1);
+            SetButtonState(false);
+        }
     }
 
     public void OnAnswerSelected(int index)
+    {
+        DisplayAnswer(index);
+
+        SetButtonState(false);
+        timer.CancelTimer();
+        hasAnsweredInTime = true;
+    }
+
+    void DisplayAnswer(int index)
     {
         Image buttonImg;
 
@@ -56,15 +72,14 @@ public class Quiz : MonoBehaviour
             buttonImg = answerButtons[correctAnswerIndex].GetComponent<Image>();
             buttonImg.sprite = correctAnswerSprite;
         }
-
-        SetButtonState(false);
     }
 
-    void GetNextQuestion()
+    public void GetNextQuestion()
     {
         SetButtonState(true);
         SetDefaultButtonSprites();
         PopulateQuestionAndAnswers();
+        hasAnsweredInTime = false;
     }
     
     void PopulateQuestionAndAnswers()

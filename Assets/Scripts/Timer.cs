@@ -11,6 +11,12 @@ public class Timer : MonoBehaviour
     public bool isAnsweringQuestion = false;
     public float fillFraction;
     float timerValue;
+    Quiz quiz;
+
+    private void Start()
+    {
+        quiz = FindObjectOfType<Quiz>();
+    }
 
     void Update()
     {
@@ -25,9 +31,10 @@ public class Timer : MonoBehaviour
         {
             if (!isAnsweringQuestion)
             {
-                loadNextQuestion = true;
+                //loadNextQuestion = true;
                 isAnsweringQuestion = true;
                 timerValue = timeToCompleteQuestion;
+                quiz.GetNextQuestion();
             }
             else
             {
