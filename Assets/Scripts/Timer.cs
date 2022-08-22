@@ -31,8 +31,13 @@ public class Timer : MonoBehaviour
         {
             if (!isAnsweringQuestion)
             {
-                
-                
+                if (quiz.progressBar.value == quiz.progressBar.maxValue)
+                {
+                    quiz.isGameOver = true;
+                    
+                    return;
+                }
+
                 isAnsweringQuestion = true;
                 timerValue = timeToCompleteQuestion;
                 quiz.GetNextQuestion();

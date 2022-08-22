@@ -16,7 +16,7 @@ public class Quiz : MonoBehaviour
     [Header("Answers")]
     [SerializeField] GameObject[] answerButtons;
     int correctAnswerIndex;
-    public bool hasAnsweredInTime;
+    public bool hasAnsweredInTime = true;
 
     [Header("Button Colors")]
     [SerializeField] Sprite defaultAnswerSprite;
@@ -31,11 +31,12 @@ public class Quiz : MonoBehaviour
     ScoreKeeper scoreKeeper;
 
     [Header("ProgressBar")]
-    [SerializeField] Slider progressBar;
+    //[SerializeField] Slider progressBar;
+    public Slider progressBar;
 
     public bool isGameOver;
 
-    void Start()
+    void Awake()
     {
         timer = FindObjectOfType<Timer>();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
@@ -62,10 +63,10 @@ public class Quiz : MonoBehaviour
         timer.CancelTimer();
         hasAnsweredInTime = true;
 
-        if (progressBar.value == progressBar.maxValue)
-        {
-            isGameOver = true;
-        }
+        //if (progressBar.value == progressBar.maxValue)
+        //{
+        //    isGameOver = true;
+        //}
     }
 
     void DisplayAnswer(int index)
